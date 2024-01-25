@@ -1,23 +1,29 @@
 package com.example.dsLearn.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_course")
 public class Course {
- 
+
   @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private String imgUri;
   private String imgGrayUri;
-  
+
+  @OneToMany(mappedBy = "course")
+  private List<Offer> offers = new ArrayList<>();
+
   public Course() {
   }
 
@@ -60,6 +66,10 @@ public class Course {
     this.imgGrayUri = imgGrauUri;
   }
 
+  public List<Offer> getOffers() {
+    return offers;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -85,7 +95,4 @@ public class Course {
     return true;
   }
 
-
-  
-  
 }
