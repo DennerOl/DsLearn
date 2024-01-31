@@ -1,7 +1,5 @@
 package com.example.dsLearn.entities.pk;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.example.dsLearn.entities.Offer;
 import com.example.dsLearn.entities.User;
 
