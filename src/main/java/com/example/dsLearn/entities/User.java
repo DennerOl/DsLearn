@@ -1,11 +1,10 @@
 package com.example.dsLearn.entities;
 
-
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,27 +14,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable   {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;	
+	private String name;
 	@Column(unique = true)
 	private String email;
 	private String password;
-	
+
 	@ManyToMany
-	@JoinTable(name = "tb_user_role",
-		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id"))	
+	@JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-	
+
+	@OneToMany(mappedBy = "user")
+	private List<Notification> notifications = new ArrayList<>();
+
 	public User() {
 	}
 
@@ -83,8 +84,8 @@ public class User implements Serializable   {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public List<Notification> getNotifications() {
+		return notifications;
 	}
 
 	@Override
@@ -112,6 +113,4 @@ public class User implements Serializable   {
 		return true;
 	}
 
-
-	
 }
